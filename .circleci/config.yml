@@ -16,14 +16,12 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: |
-            poetry config virtualenvs.path /home/circleci/project/
-            poetry install
+          command: poetry install
 
       - save_cache:
           key: deps-{{ checksum "poetry.lock" }}
           paths:
-            - .
+            - /home/circleci/.cache/pypoetry/virtualenvs
 
       - run:
           name: Checksum pre-commit
