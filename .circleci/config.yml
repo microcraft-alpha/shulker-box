@@ -21,7 +21,7 @@ jobs:
             - .
       - run:
           name: Run pre-commit hooks
-          command: poetry run pre-commit run --all-files
+          command: make lint
 
 workflows:
   continuous_integration:
