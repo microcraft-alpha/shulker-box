@@ -9,19 +9,39 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+
       - restore_cache:
           keys:
             - deps-{{ checksum "poetry.lock" }}
+
       - run:
           name: Install dependencies
-          command: poetry install
+          command: |
+            poetry config virtualenvs.path /home/circleci/project/
+            poetry install
+
       - save_cache:
           key: deps-{{ checksum "poetry.lock" }}
           paths:
             - .
+
+      - run:
+          command: |
+            cp .pre-commit-config.yaml pre-commit-cache-key.txt
+            python --version --version >> pre-commit-cache-key.txt
+
+      - restore_cache:
+          keys:
+            - v1-pc-cache-{{ checksum "pre-commit-cache-key.txt" }}
+
       - run:
           name: Run pre-commit hooks
           command: make lint
+
+      - save_cache:
+          key: v1-pc-cache-{{ checksum "pre-commit-cache-key.txt" }}
+          paths:
+            - ~/.cache/pre-commit
 
 workflows:
   continuous_integration:
