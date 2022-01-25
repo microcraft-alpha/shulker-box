@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "shulker-box"
+version = "0.1.0"
+description = "API handling Minecraft items"
+authors = ["Tobias <piotr.tobiasz.dev@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.73.0"
+structlog = "^21.5.0"
+colorama = "^0.4.4"
+environs = "^9.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+pre-commit = "^2.17.0"
+wemake-python-styleguide = "^0.16.0"
+black = "^21.12b0"
+pyproject-flake8 = "^0.0.1-alpha.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 80
+
+[tool.isort]
+line_length = 80
+profile = "black"
+default_section = "THIRDPARTY"
+known_first_party = ["shulker_box"]
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+asyncio_mode = "strict"
+addopts = "--strict-markers -vv --cache-clear --maxfail=1 --cov=shulker_box --cov-report=term --cov-report=html --cov-branch --cov-fail-under=50 --no-cov-on-fail -p no:warnings"
+
+[tool.flake8]
+exclude = ".git,__pycache__,*/static/*,*/migrations/*,*/test_*/"
+max-line-length = 80
+inline-quotes = '"'
+per-file-ignores = """
+    shulker_box/settings.py:WPS115
+    */__init__.py:D104
+"""
