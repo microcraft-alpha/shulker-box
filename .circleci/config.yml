@@ -26,6 +26,7 @@ jobs:
             - .
 
       - run:
+          name: Checksum pre-commit
           command: |
             cp .pre-commit-config.yaml pre-commit-cache-key.txt
             python --version --version >> pre-commit-cache-key.txt
