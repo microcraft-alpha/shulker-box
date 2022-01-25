@@ -43,6 +43,10 @@ jobs:
           paths:
             - ~/.cache/pre-commit
 
+      - run:
+          name: Run tests
+          command: make test
+
 workflows:
   continuous_integration:
     jobs:
