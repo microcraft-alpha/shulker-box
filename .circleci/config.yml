@@ -9,9 +9,16 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "poetry.lock" }}
       - run:
           name: Install dependencies
           command: poetry install
+      - save_cache:
+          key: deps-{{ checksum "poetry.lock" }}
+          paths:
+            - .
       - run:
           name: Run pre-commit hooks
           command: poetry run pre-commit run --all-files
