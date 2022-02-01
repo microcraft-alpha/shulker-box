@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from structlog import get_logger
 
+from shulker_box.api import router
 from shulker_box.settings import settings
 
 log = get_logger()
@@ -27,6 +28,7 @@ def create_application() -> FastAPI:
         allow_credentials=True,
         allow_methods=["*"],
     )
+    app.include_router(router.api_router)
     return app
 
 
