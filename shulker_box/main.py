@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from structlog import get_logger
 
 from shulker_box.api import router
+from shulker_box.database.client import init_database
+from shulker_box.handlers import EXCEPTION_HANDLERS
 from shulker_box.settings import settings
 
 log = get_logger()
@@ -29,7 +31,16 @@ def create_application() -> FastAPI:
         allow_methods=["*"],
     )
     app.include_router(router.api_router)
+    app.exception_handlers = dict(EXCEPTION_HANDLERS)
+    app.middleware_stack = app.build_middleware_stack()
     return app
 
 
 app = create_application()
+
+
+@app.on_event("startup")
+async def startup():
+    """Handle startup events."""
+    log.info("Starting app...")
+    await init_database()
