@@ -6,6 +6,9 @@ from fastapi import APIRouter
 from starlette import status
 
 from shulker_box.api.v1.items import schemas
+from shulker_box.database.models import Item
+from shulker_box.database.queries import create_query
+from shulker_box.domain import exceptions
 
 router = APIRouter(prefix="/items", tags=["items"])
 
@@ -21,13 +24,17 @@ async def create_item(body: schemas.ItemCreateSchema) -> schemas.ItemOutSchema:
     Args:
         body (ItemCreateSchema): item data.
 
+    Raises:
+        AlreadyExistsError: if item already exists.
+
     Returns:
         ItemOutSchema: created item.
     """
-    return schemas.ItemOutSchema(
-        id=uuid.uuid4(),
-        **body.dict(),
-    )
+    existing_item = await Item.find_one(Item.name == body.name)
+    if existing_item:
+        raise exceptions.AlreadyExistsError(id=existing_item.id)
+    item = await Item(**body.dict()).insert()
+    return schemas.ItemOutSchema(**item.dict())
 
 
 @router.get(
@@ -41,13 +48,7 @@ async def get_items() -> list[schemas.ItemOutSchema]:
     Returns:
         list[ItemOutSchema]: list of items.
     """
-    return [
-        schemas.ItemOutSchema(
-            id=uuid.uuid4(),
-            name="Test Item",
-            category=schemas.ItemCategory.BLOCK,
-        ),
-    ]
+    return [schemas.ItemOutSchema(**item.dict()) async for item in Item.all()]
 
 
 @router.get(
@@ -61,14 +62,16 @@ async def get_item(pk: uuid.UUID) -> schemas.ItemOutSchema:
     Args:
         pk (UUID): item id.
 
+    Raises:
+        DoesNotExistError: if item does not exist.
+
     Returns:
         ItemOutSchema: retrieved item.
     """
-    return schemas.ItemOutSchema(
-        id=pk,
-        name="Test Item",
-        category=schemas.ItemCategory.BLOCK,
-    )
+    item = await Item.find_one(Item.id == pk)
+    if not item:
+        raise exceptions.DoesNotExistError(id=pk)
+    return schemas.ItemOutSchema(**item.dict())
 
 
 @router.delete(
@@ -80,7 +83,14 @@ async def delete_item(pk: uuid.UUID) -> None:
 
     Args:
         pk (UUID): item id.
+
+    Raises:
+        DoesNotExistError: if item does not exist.
     """
+    item = await Item.find_one(Item.id == pk)
+    if not item:
+        raise exceptions.DoesNotExistError(id=pk)
+    await item.delete()
 
 
 @router.patch(
@@ -98,11 +108,15 @@ async def update_item(
         pk (UUID): item id.
         body (ItemUpdateSchema): update data.
 
+    Raises:
+        DoesNotExistError: if item does not exist.
+
     Returns:
         ItemOutSchema: updated item.
     """
-    return schemas.ItemOutSchema(
-        id=uuid.uuid4(),
-        name="Test Item",
-        category=schemas.ItemCategory.BLOCK,
-    )
+    query = create_query(body.dict(exclude_unset=True), Item)
+    await Item.find_one(Item.id == pk).set(query)
+    item = await Item.find_one(Item.id == pk)
+    if not item:
+        raise exceptions.DoesNotExistError(id=pk)
+    return schemas.ItemOutSchema(**item.dict())

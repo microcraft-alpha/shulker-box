@@ -15,3 +15,13 @@ services:
       - 8003:8003
     stdin_open: true
     tty: true
+
+  mongodb:
+    container_name: shulker-box-db
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: items
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - 27017:27017

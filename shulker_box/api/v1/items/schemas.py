@@ -1,20 +1,9 @@
 """Mobs API schemas."""
 
-import enum
 import uuid
 
 from shulker_box.api import schemas
-
-
-class ItemCategory(enum.Enum):
-    """Item categories."""
-
-    BLOCK = "block"
-    WEAPON = "weapon"
-    ARMOR = "armor"
-    PLANT = "plant"
-    FOOD = "food"
-    TOOL = "tool"
+from shulker_box.domain.types import ItemCategory
 
 
 class ItemCreateSchema(schemas.Schema):

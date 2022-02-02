@@ -11,6 +11,7 @@ structlog = "^21.5.0"
 colorama = "^0.4.4"
 environs = "^9.5.0"
 uvicorn = { extras = ["standard"], version = "^0.17.1" }
+beanie = "^1.8.12"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.17.0"
@@ -43,7 +44,7 @@ addopts = "--strict-markers -vv --cache-clear --maxfail=1 --cov=shulker_box --co
 exclude = ".git,__pycache__,*/static/*,*/migrations/*,*/test_*/"
 max-line-length = 80
 inline-quotes = '"'
-ignore = "WPS115,WPS431,D106"
+ignore = "WPS115,WPS431,D106,WPS305,WPS110,WPS600"
 per-file-ignores = """
     */__init__.py:D104
 """
