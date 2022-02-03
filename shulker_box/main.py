@@ -24,6 +24,7 @@ def create_application() -> FastAPI:
         version=settings.VERSION,
         description=settings.DESCRIPTION,
         docs_url="/api/docs",
+        on_startup=[init_database],
     )
     app.add_middleware(
         CORSMiddleware,
@@ -37,10 +38,3 @@ def create_application() -> FastAPI:
 
 
 app = create_application()
-
-
-@app.on_event("startup")
-async def startup():
-    """Handle startup events."""
-    log.info("Starting app...")
-    await init_database()

@@ -7,6 +7,13 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.10.2
+        environment:
+          DATABASE_URL: mongodb://mongo:mongo@localhost:27017/items?authSource=admin
+      - image: circleci/mongo:5.0
+        environment:
+          MONGO_INITDB_DATABASE: items
+          MONGO_INITDB_ROOT_USERNAME: mongo
+          MONGO_INITDB_ROOT_PASSWORD: mongo
 
     steps:
       - checkout

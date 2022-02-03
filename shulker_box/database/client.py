@@ -7,10 +7,15 @@ from shulker_box.database.models import Item
 from shulker_box.settings import settings
 
 
-async def init_database():
-    """Initialize the database."""
+async def init_database() -> motor_asyncio.AsyncIOMotorClient:
+    """Initialize the database.
+
+    Returns:
+        AsyncIOMotorClient: database client.
+    """
     client = motor_asyncio.AsyncIOMotorClient(settings.DATABASE_URL)
     await init_beanie(
-        database=client.db_name,
+        database=client.account,
         document_models=[Item],
     )
+    return client
