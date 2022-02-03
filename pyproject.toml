@@ -49,3 +49,6 @@ ignore = "WPS115,WPS431,D106,WPS305,WPS110,WPS600,WPS306,D107,B008,WPS404,N812,W
 per-file-ignores = """
     */__init__.py:D104
 """
+
+[tool.coverage.report]
+exclude_lines = ["# pragma: no cover", "...  # noqa: WPS428"]
