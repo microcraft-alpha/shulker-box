@@ -1,5 +1,6 @@
 """Mob API routes."""
 
+
 import uuid
 
 from fastapi import APIRouter
@@ -110,13 +111,19 @@ async def update_item(
 
     Raises:
         DoesNotExistError: if item does not exist.
+        AlreadyExistsError: if item violates unique constraint.
 
     Returns:
         ItemOutSchema: updated item.
     """
+    existing_item = await Item.find_one(Item.name == body.name)
+    if existing_item:
+        raise exceptions.AlreadyExistsError(id=existing_item.id)
+
     query = create_query(body.dict(exclude_unset=True), Item)
-    await Item.find_one(Item.id == pk).set(query)
-    item = await Item.find_one(Item.id == pk)
-    if not item:
+    result = await Item.find_one(Item.id == pk).set(query)
+    if result.matched_count == 0:  # type: ignore
         raise exceptions.DoesNotExistError(id=pk)
-    return schemas.ItemOutSchema(**item.dict())
+
+    item = await Item.find_one(Item.id == pk)
+    return schemas.ItemOutSchema(**item.dict())  # type: ignore
