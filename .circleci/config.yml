@@ -9,7 +9,7 @@ jobs:
       - image: cimg/python:3.10.2
         environment:
           DATABASE_URL: mongodb://mongo:mongo@localhost:27017/items?authSource=admin
-      - image: cimg/mongo:5.0
+      - image: circleci/mongo:5.0
         environment:
           MONGO_INITDB_DATABASE: items
           MONGO_INITDB_ROOT_USERNAME: mongo
