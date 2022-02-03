@@ -9,7 +9,7 @@ from shulker_box.database.client import init_database
 from shulker_box.handlers import EXCEPTION_HANDLERS
 from shulker_box.settings import settings
 
-log = get_logger()
+log = get_logger(__name__)
 
 
 def create_application() -> FastAPI:

@@ -1,4 +1,4 @@
-"""ORM helpers."""
+"""Database ORM helpers."""
 
 from beanie import Document
 

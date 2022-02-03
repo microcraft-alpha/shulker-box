@@ -1,17 +1,17 @@
-"""Mob API routes."""
+"""Items API routes."""
 
 
 import uuid
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from starlette import status
 
-from shulker_box.api.v1.items import schemas
-from shulker_box.database.models import Item
-from shulker_box.database.queries import create_query
-from shulker_box.domain import exceptions
+from shulker_box.api.v1.items import filters, schemas
+from shulker_box.domain.items import repositories, services
 
 router = APIRouter(prefix="/items", tags=["items"])
+
+items_service = services.ItemService(repositories.ItemMongoRepository())
 
 
 @router.post(
@@ -25,17 +25,10 @@ async def create_item(body: schemas.ItemCreateSchema) -> schemas.ItemOutSchema:
     Args:
         body (ItemCreateSchema): item data.
 
-    Raises:
-        AlreadyExistsError: if item already exists.
-
     Returns:
         ItemOutSchema: created item.
     """
-    existing_item = await Item.find_one(Item.name == body.name)
-    if existing_item:
-        raise exceptions.AlreadyExistsError(id=existing_item.id)
-    item = await Item(**body.dict()).insert()
-    return schemas.ItemOutSchema(**item.dict())
+    return await items_service.create(body)
 
 
 @router.get(
@@ -43,13 +36,18 @@ async def create_item(body: schemas.ItemCreateSchema) -> schemas.ItemOutSchema:
     status_code=status.HTTP_200_OK,
     response_model=list[schemas.ItemOutSchema],
 )
-async def get_items() -> list[schemas.ItemOutSchema]:
+async def get_items(
+    url_filters: filters.ItemFilters = Depends(),
+) -> list[schemas.ItemOutSchema]:
     """Get all the items.
+
+    Args:
+        url_filters (ItemFilters): url params.
 
     Returns:
         list[ItemOutSchema]: list of items.
     """
-    return [schemas.ItemOutSchema(**item.dict()) async for item in Item.all()]
+    return await items_service.collect(url_filters)
 
 
 @router.get(
@@ -63,16 +61,10 @@ async def get_item(pk: uuid.UUID) -> schemas.ItemOutSchema:
     Args:
         pk (UUID): item id.
 
-    Raises:
-        DoesNotExistError: if item does not exist.
-
     Returns:
         ItemOutSchema: retrieved item.
     """
-    item = await Item.find_one(Item.id == pk)
-    if not item:
-        raise exceptions.DoesNotExistError(id=pk)
-    return schemas.ItemOutSchema(**item.dict())
+    return await items_service.get(pk)
 
 
 @router.delete(
@@ -84,14 +76,8 @@ async def delete_item(pk: uuid.UUID) -> None:
 
     Args:
         pk (UUID): item id.
-
-    Raises:
-        DoesNotExistError: if item does not exist.
     """
-    item = await Item.find_one(Item.id == pk)
-    if not item:
-        raise exceptions.DoesNotExistError(id=pk)
-    await item.delete()
+    await items_service.delete(pk)
 
 
 @router.patch(
@@ -109,21 +95,7 @@ async def update_item(
         pk (UUID): item id.
         body (ItemUpdateSchema): update data.
 
-    Raises:
-        DoesNotExistError: if item does not exist.
-        AlreadyExistsError: if item violates unique constraint.
-
     Returns:
         ItemOutSchema: updated item.
     """
-    existing_item = await Item.find_one(Item.name == body.name)
-    if existing_item:
-        raise exceptions.AlreadyExistsError(id=existing_item.id)
-
-    query = create_query(body.dict(exclude_unset=True), Item)
-    result = await Item.find_one(Item.id == pk).set(query)
-    if result.matched_count == 0:  # type: ignore
-        raise exceptions.DoesNotExistError(id=pk)
-
-    item = await Item.find_one(Item.id == pk)
-    return schemas.ItemOutSchema(**item.dict())  # type: ignore
+    return await items_service.update(pk, body)
