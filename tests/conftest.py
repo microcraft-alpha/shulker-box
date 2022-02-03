@@ -1,6 +1,6 @@
 """Tests fixtures."""
 
-import typing as T  # noqa: WPS111,N812
+import typing as T
 
 import pytest_asyncio
 from httpx import AsyncClient

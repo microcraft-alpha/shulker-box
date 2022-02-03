@@ -1,4 +1,4 @@
-"""Mobs API schemas."""
+"""Items API schemas."""
 
 import uuid
 
