@@ -8,7 +8,7 @@ from structlog import get_logger
 from shulker_box.api.v1.items import filters, schemas
 from shulker_box.domain import exceptions, repositories, types_utils
 
-logger = get_logger()
+logger = get_logger(__name__)
 
 
 class ItemService:
