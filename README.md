@@ -5,7 +5,7 @@
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![CircleCI](https://circleci.com/gh/microcraft-alpha/shulker-box/tree/main.svg?style=svg)](https://circleci.com/gh/microcraft-alpha/shulker-box/tree/main)
+[![CircleCI](https://circleci.com/gh/microcraft-alpha/shulker-box/tree/main.svg?style=svg&circle-token=0b932898f002af8ea0971cd015408c68937bd26c)](https://circleci.com/gh/microcraft-alpha/shulker-box/tree/main)
 
 ## 📝 Table of Contents
 
