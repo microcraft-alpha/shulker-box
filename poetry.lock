@@ -72,7 +72,7 @@ stevedore = ">=1.20.0"
 
 [[package]]
 name = "beanie"
-version = "1.8.12"
+version = "1.10.0"
 description = "Asynchronous Python ODM for MongoDB"
 category = "main"
 optional = false
@@ -1098,7 +1098,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ddcf14df888413bbb1ab704d09daa88b3ef45baafa830c2029fa7ee66d06c700"
+content-hash = "4df4f682c1b2f59802120fe77d12538bcbfbd187a24b3f9616fe09468fce1295"
 
 [metadata.files]
 anyio = [
@@ -1126,8 +1126,8 @@ bandit = [
     {file = "bandit-1.7.1.tar.gz", hash = "sha256:a81b00b5436e6880fa8ad6799bc830e02032047713cbb143a12939ac67eb756c"},
 ]
 beanie = [
-    {file = "beanie-1.8.12-py3-none-any.whl", hash = "sha256:38062203eed8b8088a57c6fba0948ee55c268419d0fa10848a273b67698cebe1"},
-    {file = "beanie-1.8.12.tar.gz", hash = "sha256:bfdddcfb962f870e1096d2d4602765a21875285a583e081a76571f625c6b7309"},
+    {file = "beanie-1.10.0-py3-none-any.whl", hash = "sha256:2d50a4417abf050bb367a5536029311fb1c146e9a7f5711e90a18b1d80249077"},
+    {file = "beanie-1.10.0.tar.gz", hash = "sha256:71327af73c72932b29d8e55e4f399c0ad740f7f1f1f7efcb3d71a5f284459709"},
 ]
 black = [
     {file = "black-22.1.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:1297c63b9e1b96a3d0da2d85d11cd9bf8664251fd69ddac068b98dc4f34f73b6"},
