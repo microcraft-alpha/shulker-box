@@ -14,7 +14,7 @@ jobs:
     env:
       DATABASE_URL: mongodb://mongo:mongo@localhost:27017/items?authSource=admin
     services:
-      mongo:
+      mongodb:
         image: mongo
         env:
           MONGO_INITDB_DATABASE: items
