@@ -10,7 +10,7 @@ fastapi = "^0.75.0"
 structlog = "^21.5.0"
 colorama = "^0.4.4"
 environs = "^9.5.0"
-uvicorn = { extras = ["standard"], version = "^0.17.4" }
+uvicorn = { extras = ["standard"], version = "^0.17.6" }
 beanie = "^1.10.0"
 
 [tool.poetry.dev-dependencies]
