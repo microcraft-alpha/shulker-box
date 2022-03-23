@@ -24,4 +24,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo
     ports:
-      - 27017:27017
+      - 27018:27017
+
+# Connect to the oak signs network
+# to enable communication between the services
+networks:
+  default:
+    name: oak-signs_default
