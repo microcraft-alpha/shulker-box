@@ -7,6 +7,8 @@ from structlog import get_logger
 
 from shulker_box.api.v1.items import filters, schemas
 from shulker_box.domain import exceptions, repositories, types_utils
+from shulker_box.domain.events.outgoing import ItemCreated, ItemDeleted
+from shulker_box.events.bus import EventBus
 
 logger = get_logger(__name__)
 
@@ -38,6 +40,7 @@ class ItemService:
             logger.error("Item already exists", item=items[0])
             raise exceptions.AlreadyExistsError(id=items[0].id)
         item = await self.repository.create(data_object)
+        await EventBus.publish(ItemCreated(**item.dict()))
         logger.info("Created a new item", item=item)
         return item
 
@@ -84,6 +87,7 @@ class ItemService:
         """
         logger.info("Deleting an item", id=pk)
         await self.repository.delete(pk)
+        await EventBus.publish(ItemDeleted(id=pk))
         logger.info("Deleted an item", id=pk)
 
     async def update(

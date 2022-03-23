@@ -16,7 +16,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Simple `FastAPI` application that manages Minecraft items. This time I wanted to build the project around `MongoDB` database and `Beanie` ORM. For more information about the code structure please visit my another Minecraft-related `FastAPI` project, [Monster Spawner](https://github.com/microcraft-alpha/monster-spawner).
+Simple `FastAPI` application that manages Minecraft items. This time I wanted to build the project around `MongoDB` database and `Beanie` ORM. For more information about the code structure please visit my another Minecraft-related `FastAPI` project, [Monster Spawner](https://github.com/microcraft-alpha/monster-spawner). If you want to see how my DDD structure eventually looks like, I highly encourage to check the last microservice under this organization, [Oak Signs](https://github.com/microcraft-alpha/oak-signs)
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 

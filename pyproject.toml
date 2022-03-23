@@ -10,15 +10,16 @@ fastapi = "^0.75.0"
 structlog = "^21.5.0"
 colorama = "^0.4.4"
 environs = "^9.5.0"
-uvicorn = { extras = ["standard"], version = "^0.17.4" }
-beanie = "^1.10.0"
+uvicorn = { extras = ["standard"], version = "^0.17.6" }
+beanie = "^1.10.1"
+redis = "^4.1.4"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.17.0"
-wemake-python-styleguide = "^0.16.0"
+wemake-python-styleguide = "^0.16.1"
 black = "^22.1"
 pyproject-flake8 = "^0.0.1-alpha.2"
-pytest = "^7.0.1"
+pytest = "^7.1.1"
 pytest-asyncio = "^0.18.2"
 pytest-cov = "^3.0.0"
 httpx = "^0.22.0"
@@ -40,7 +41,7 @@ known_first_party = ["shulker_box"]
 [tool.pytest.ini_options]
 testpaths = "tests"
 asyncio_mode = "strict"
-addopts = "--strict-markers -vv --cache-clear --maxfail=1 --cov=shulker_box --cov-report=term --cov-report=html --cov-branch --cov-fail-under=0 --no-cov-on-fail -p no:warnings"
+addopts = "--strict-markers -vv --cache-clear --maxfail=1 --cov=shulker_box --cov-report=term --cov-report=html --cov-branch --cov-fail-under=100 --no-cov-on-fail -p no:warnings"
 
 [tool.flake8]
 exclude = ".git,__pycache__,*/static/*,*/migrations/*,*/test_*/"
@@ -49,7 +50,12 @@ inline-quotes = '"'
 ignore = "WPS115,WPS431,D106,WPS305,WPS110,WPS600,WPS306,D107,B008,WPS404,N812,WPS111"
 per-file-ignores = """
     */__init__.py:D104
+    shulker_box/__init__.py:WPS412
 """
 
 [tool.coverage.report]
-exclude_lines = ["# pragma: no cover", "...  # noqa: WPS428"]
+exclude_lines = [
+    "# pragma: no cover",
+    "...  # noqa: WPS428",
+    "if TYPE_CHECKING:"
+]
