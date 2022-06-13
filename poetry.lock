@@ -77,7 +77,7 @@ yaml = ["pyyaml"]
 
 [[package]]
 name = "beanie"
-version = "1.10.1"
+version = "1.11.3"
 description = "Asynchronous Python ODM for MongoDB"
 category = "main"
 optional = false
@@ -85,7 +85,7 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 click = ">=7"
-motor = ">=2.5,<3.0"
+motor = ">=2.5,<4.0"
 pydantic = ">=1.9.0"
 toml = "*"
 yarl = ">=1.6"
@@ -1147,7 +1147,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "5d77d0e909cecdae7cf65950c787d444bbca786089ffdbe9a01eba68510446fa"
+content-hash = "0cb91c3c0c0140ae1602ef4f69629853aeb3640ddb4db8a5728c1d8f004ee412"
 
 [metadata.files]
 anyio = [
@@ -1175,8 +1175,8 @@ bandit = [
     {file = "bandit-1.7.4.tar.gz", hash = "sha256:2d63a8c573417bae338962d4b9b06fbc6080f74ecd955a092849e1e65c717bd2"},
 ]
 beanie = [
-    {file = "beanie-1.10.1-py3-none-any.whl", hash = "sha256:0fc6adf024136baeb0b474daace750acae737bdade583fc84b87384ec24efda3"},
-    {file = "beanie-1.10.1.tar.gz", hash = "sha256:fec740cc7b8d2478375bade675d0dd2ad0f66a4fa17ff31f0872df02ae4c470e"},
+    {file = "beanie-1.11.3-py3-none-any.whl", hash = "sha256:570f02da519af61d5ce7e67838c1e63b9b0fcbf20d67a99a9c23bbb0830937d7"},
+    {file = "beanie-1.11.3.tar.gz", hash = "sha256:0b163f425b6cf00a1ad3221417049c2fddba1f09bbcde6c59d2273712be24d27"},
 ]
 black = [
     {file = "black-22.1.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:1297c63b9e1b96a3d0da2d85d11cd9bf8664251fd69ddac068b98dc4f34f73b6"},
